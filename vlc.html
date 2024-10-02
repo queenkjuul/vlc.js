@@ -24,6 +24,7 @@
               <input type="text" size=60 id="opts" name="opts"></input>
               <button id="reload" class="menu-button">Save</button>
               <button id="reset-options" class="menu-button">Default values</button>
+              <button id="stop_btn" class="menu-button">Stop</button>
             </div>
           </ul>
         </div>
@@ -341,6 +342,9 @@
           if (!window.files || !window.files.length) return;
           window.media_player.previous_chapter();
           update_overlay();
+        const stopButton = document.getElementById('stop_btn');
+        stopButton.addEventListener("click", (e) => {
+            window.media_player.stop();
         });
       };
 
