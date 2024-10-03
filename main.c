@@ -34,10 +34,10 @@ static void on_position_changed(const libvlc_event_t *p_event, void *p_data){
     VLC_UNUSED(p_event);
     VLC_UNUSED(p_data);
 
-    MAIN_THREAD_ASYNC_EM_ASM({
-        const overlay = document.getElementById("overlay");
-        update_overlay(overlay);
-    });
+    //MAIN_THREAD_ASYNC_EM_ASM({
+    //    const overlay = document.getElementById("overlay");
+    //    update_overlay(overlay);
+    //});
 }
 
 int main() {

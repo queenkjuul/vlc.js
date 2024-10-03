@@ -29,7 +29,7 @@ if [ ! -d emsdk ]; then
 fi
 
 cd $WORK_DIR
-TESTED_HASH="396916a1759b61a365d80a9195d2a4792dc9a2b7"
+TESTED_HASH="wasm-emscripten-dvd-dec-2024"
 # Go go go vlc
 if [ ! -d vlc ]; then
     diagnostic "VLC source not found, cloning"
