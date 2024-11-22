@@ -53,9 +53,6 @@ emcc --bind -s USE_PTHREADS=1 -s TOTAL_MEMORY=2GB -s PTHREAD_POOL_SIZE=25 \
     -s OFFSCREEN_FRAMEBUFFER=1  \
     -s USE_WEBGL2=1 \
     -s ASSERTIONS=2 \
-    -s GL_ASSERTIONS=1 \
-    -s GL_DEBUG=1 \
-    -s TRACE_WEBGL_CALLS=1 \
     --profiling-funcs \
     -s OFFSCREENCANVAS_SUPPORT=1 \
     -s MODULARIZE=1 -s EXPORT_NAME="initModule" \
