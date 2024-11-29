@@ -72,6 +72,10 @@ er) {
   libvlc_media_player_stop_async(media_player);
 }
 
+void EMSCRIPTEN_KEEPALIVE wasm_media_player_navigate(libvlc_media_player_t *media_player, unsigned navigate) {
+  libvlc_media_player_navigate(media_player, navigate);
+}
+
 
 // TODO
 // LIBVLC_API int libvlc_media_player_stop_async ( libvlc_media_player_t *p_mi );
