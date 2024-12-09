@@ -78,11 +78,11 @@
         });
 
         resetBtn.addEventListener('click', () => {
-          localStorage.setItem('options', '--codec=webcodec --aout=emworklet_audio -vvv');
+          localStorage.setItem('options', '--codec=ffmpeg --aout=emworklet_audio --demux=dvd -vvv');
           reloadBtn.click();
         });
 
-        options.value = localStorage.getItem('options') || '--codec=webcodec --aout=emworklet_audio -vvv';
+        options.value = localStorage.getItem('options') || '--codec=ffmpeg --aout=emworklet_audio --demux=dvd -vvv';
 
         options.addEventListener('change', () => {
           localStorage.setItem('options', options.value);
