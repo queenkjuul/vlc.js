@@ -14,7 +14,7 @@ compile-job:
     - bash compile.sh              # Compilation
 
   only:
-    - incoming
+    - wasm-emscripten-dvd-nov-2024
   artifacts:
     paths:                  ## PATHS FOR ARTIFACTS
       - experimental*       # worker.js, wasm file and js file, data...
