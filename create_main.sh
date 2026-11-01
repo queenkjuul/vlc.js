@@ -51,6 +51,7 @@ done
 
 emcc --bind -s USE_PTHREADS=1 -s TOTAL_MEMORY=2GB -s PTHREAD_POOL_SIZE=25 \
     -s OFFSCREEN_FRAMEBUFFER=1  \
+    -s FETCH=1 \
     -s USE_WEBGL2=1 \
     -s ASSERTIONS=2 \
     --profiling-funcs \

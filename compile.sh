@@ -29,16 +29,16 @@ if [ ! -d emsdk ]; then
 fi
 
 cd $WORK_DIR
-TESTED_HASH="wasm-emscripten-dvd-dec-2024"
+TESTED_HASH="wasm-emscripten-dvd-jan-2025"
 # Go go go vlc
 if [ ! -d vlc ]; then
     diagnostic "VLC source not found, cloning"
-    git clone https://code.videolan.org/videolan/vlc.git vlc || checkfail "VLC source: git clone failed"
+    git clone https://github.com/queenkjuul/vlc.git vlc || checkfail "VLC source: git clone failed"
     cd vlc
     diagnostic "VLC source: resetting to the TESTED_HASH commit (${TESTED_HASH})"
-    git reset --hard ${TESTED_HASH} || checkfail "VLC source: TESTED_HASH ${TESTED_HASH} not found"
+    git checkout ${TESTED_HASH} || checkfail "VLC source: TESTED_HASH ${TESTED_HASH} not found"
     # patching vlc
-    if [ -d ../vlc_patches ] && [ "$(ls -A ../vlc_patches)" ]; then
+    # if [ -d ../vlc_patches ] && [ "$(ls -A ../vlc_patches)" ]; then
 	# core patches
 	#git am -3 ../vlc_patches/0001-configure-improve-testing-unsupported-GL-functions-f.patch
 	#git am -3 ../vlc_patches/0001-modules-disable-libvlc_json-and-ytbdl-vlc.js-17.patch
@@ -50,8 +50,8 @@ if [ ! -d vlc ]; then
 	#git am -3 ../vlc_patches/audio_output/new_aout.patch
 	#git am -3 ../vlc_patches/filesystem/*.patch
 	#git am -3 ../vlc_patches/demo_alpha/*
-	git am -3  ../vlc_patches/aug/*
-    fi
+	# git am -3  ../vlc_patches/aug/*
+    # fi
     checkfail "vlc source: git clone failed"
 fi
 
