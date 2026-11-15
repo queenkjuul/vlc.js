@@ -26,6 +26,8 @@
               <button id="reset-options" class="menu-button">Default values</button>
               <button id="play_btn" class="menu-button">Play</button>
               <button id="stop_btn" class="menu-button">Stop</button>
+              <button id="next_btn" class="menu-button">Next</button>
+              <button id="prev_btn" class="menu-button">Prev</button>
             </div>
           </ul>
         </div>
@@ -55,9 +57,11 @@
       </div>
     </div>
     <script src="./lib/module-loader.js"></script>
-    <script src="./experimental.js"></script>
+    <script src="./vlc.js"></script>
     <script type="module">
       import { MediaPlayer, Navigate } from "./lib/libvlc.js";
+
+      var FILEPATH = "fetch/dvd://https://archive.queenkjuul.com/big-buck-bunny-NTSC.iso"
 
       var vlc_options = "";
 
@@ -67,7 +71,18 @@
       async function init() {
         const app = document.getElementById('app');
         const spinner = document.getElementById('spinner-lds');
-        const playButton = document.getElementById("play-button");
+        const playButton = document.getElementById("play_btn");
+        playButton.addEventListener("click", (e) => {
+          window.media_player.toggle_play()
+        })
+        const nextButton = document.getElementById("next_btn")
+        nextButton?.addEventListener("click", (e) => {
+          window.media_player?.next_chapter()
+        })
+        const prevButton = document.getElementById("prev_btn")
+        prevButton?.addEventListener("click", (e) => {
+          window.media_player?.previous_chapter()
+        })
         const options = document.getElementById("opts");
         const reloadBtn = document.getElementById('reload');
         const resetBtn = document.getElementById('reset-options');
@@ -106,7 +121,7 @@
           // VlcModuleExt is an object defined in 'lib/module-loader.js' with a
           // bunch of options; also, all the fields of VlcModuleExt are added to
           // the returned Module.
-          globalThis.Module = await initModule(VlcModuleExt);
+          globalThis.Module = await initVLC(VlcModuleExt);
           createHandlers();
           localStorage.setItem('valid-options', options.value);
         } catch (e) {
@@ -175,16 +190,12 @@
         }
 
         Module._wasm_libvlc_init(vlc_opts_array.length, vlc_argv);
-        media_player = new MediaPlayer(Module, "emjsfile://1");
+        media_player = new MediaPlayer(Module, FILEPATH);
         media_player.set_volume(80);
 
         Module._set_global_media_player(media_player.media_player_ptr);
         window.media_player = media_player;
 
-        const playButton = document.getElementById('play_btn');
-        play_btn.addEventListener("click", (e) => {
-            inputElement.click();
-        });
         const stopButton = document.getElementById('stop_btn');
         stopButton.addEventListener("click", (e) => {
             window.media_player.stop();

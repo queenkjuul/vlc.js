@@ -11,3 +11,8 @@ experimental.js
 experimental.wasm
 experimental.wasm.map
 experimental.worker.js
+vlc.js
+vlc.wasm
+vlc.worker.js
+libvlc.d.ts
+libvlc_wasm.sym

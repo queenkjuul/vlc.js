@@ -49,17 +49,22 @@ do
     shift
 done
 
-emcc --bind -s USE_PTHREADS=1 -s TOTAL_MEMORY=2GB -s PTHREAD_POOL_SIZE=25 \
+emcc --bind \
+    -s USE_PTHREADS=1 \
+    -s TOTAL_MEMORY=2GB \
+    -s PTHREAD_POOL_SIZE=25 \
     -s OFFSCREEN_FRAMEBUFFER=1  \
     -s FETCH=1 \
     -s USE_WEBGL2=1 \
     -s ASSERTIONS=2 \
-    --profiling-funcs \
     -s OFFSCREENCANVAS_SUPPORT=1 \
-    -s MODULARIZE=1 -s EXPORT_NAME="initModule" \
+    -s MODULARIZE=1 \
+    -s EXPORT_NAME="initVLC" \
     -s EXPORTED_RUNTIME_METHODS="['stringToAscii', 'stringToNewUTF8']" \
-    -s ASYNCIFY=1 -O3 \
-    -s EXIT_RUNTIME=1 -s ASSERTIONS=1 \
+    -s ASYNCIFY=1 \
+    -Os \
+    -s EXIT_RUNTIME=1 \
+    -s ASSERTIONS=1 \
     -I $PATH_VLC/include/ \
     main.c exports_media_player.c exports_media.c \
     -s EXPORTED_FUNCTIONS=@libvlc_wasm.sym \
@@ -72,7 +77,8 @@ emcc --bind -s USE_PTHREADS=1 -s TOTAL_MEMORY=2GB -s PTHREAD_POOL_SIZE=25 \
     $PATH_VLC/build-emscripten/compat/.libs/libcompat.a \
     --js-library lib/wasm-imports.js \
     --js-library vlc/modules/audio_output/webaudio/webaudio.js \
-    -o experimental.js
+    --emit-tsd libvlc.d.ts \
+    -o vlc.js
 
 #em++ --bind -s USE_PTHREADS=1 -s TOTAL_MEMORY=2GB -s PTHREAD_POOL_SIZE=21 \
 #    -s OFFSCREEN_FRAMEBUFFER=1\
