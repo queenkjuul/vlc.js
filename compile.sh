@@ -24,12 +24,13 @@ EMSDK_VERSION="3.1.55"
 if [ ! -d emsdk ]; then
     diagnostic "emsdk not found. Fetching it"
     git clone http://github.com/emscripten-core/emsdk.git emsdk
-    cd emsdk && ./emsdk update-tags && ./emsdk install ${EMSDK_VERSION} && ./emsdk activate ${EMSDK_VERSION}
     checkfail "emsdk: fetch failed"
 fi
 
+cd emsdk && git checkout 5.0.1 && ./emsdk update-tags && ./emsdk install ${EMSDK_VERSION} && ./emsdk activate ${EMSDK_VERSION}
+
 cd $WORK_DIR
-TESTED_HASH="wasm-emscripten-dvd-jan-2025"
+TESTED_HASH="wasm-emscripten-dvd-discodeck"
 # Go go go vlc
 if [ ! -d vlc ]; then
     diagnostic "VLC source not found, cloning"
