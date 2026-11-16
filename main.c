@@ -30,14 +30,28 @@ void EMSCRIPTEN_KEEPALIVE set_global_media_player(libvlc_media_player_t *media_p
 
 extern void update_overlay();
 
-static void on_position_changed(const libvlc_event_t *p_event, void *p_data){
-    VLC_UNUSED(p_event);
-    VLC_UNUSED(p_data);
+// static void on_position_changed(const libvlc_event_t *p_event, void *p_data){
+//     VLC_UNUSED(p_event);
+//     VLC_UNUSED(p_data);
 
-    //MAIN_THREAD_ASYNC_EM_ASM({
-    //    const overlay = document.getElementById("overlay");
-    //    update_overlay(overlay);
-    //});
+//     //MAIN_THREAD_ASYNC_EM_ASM({
+//     //    const overlay = document.getElementById("overlay");
+//     //    update_overlay(overlay);
+//     //});
+// }
+
+static void dispatch_event(const libvlc_event_t *p_event, void *p_data) {
+    VLC_UNUSED(p_data);
+    int event_type = p_event->type;
+
+    MAIN_THREAD_ASYNC_EM_ASM({
+        if (!window.VLC) return;
+        const player = VLC.player;
+        if (!player) return;
+        if (typeof player.dispatchEvent === 'function') {
+            player.dispatchEvent($0);
+        }
+    }, event_type);
 }
 
 int main() {
@@ -69,23 +83,47 @@ int main() {
     return 0;
 }
 
-// Used to make sure the UI (progress bar, play/pause button, etc) is
-// updated as the video is read.
-void EMSCRIPTEN_KEEPALIVE attach_update_events(libvlc_media_player_t *media_player) {
+int EMSCRIPTEN_KEEPALIVE add_event_listener(libvlc_media_player_t *media_player, libvlc_event_type_t type) {
     libvlc_event_manager_t* event_manager = libvlc_media_player_event_manager(media_player);
     int res;
     res = libvlc_event_attach(
         event_manager,
-        libvlc_MediaPlayerPositionChanged,
-        on_position_changed,
+        type,
+        dispatch_event,
         NULL
     );
     assert(res == 0);
-    res = libvlc_event_attach(
-        event_manager,
-        libvlc_MediaPlayerPaused,
-        on_position_changed,
-        NULL
-    );
-    assert(res == 0);
+    return res;
 }
+
+void EMSCRIPTEN_KEEPALIVE remove_event_listener(libvlc_media_player_t *media_player, libvlc_event_type_t type) {
+    libvlc_event_manager_t* event_manager = libvlc_media_player_event_manager(media_player);
+    int res;
+    libvlc_event_detach(
+        event_manager,
+        type,
+        dispatch_event,
+        NULL
+    );
+}
+
+// Used to make sure the UI (progress bar, play/pause button, etc) is
+// updated as the video is read.
+// void EMSCRIPTEN_KEEPALIVE attach_update_events(libvlc_media_player_t *media_player) {
+//     libvlc_event_manager_t* event_manager = libvlc_media_player_event_manager(media_player);
+//     int res;
+//     res = libvlc_event_attach(
+//         event_manager,
+//         libvlc_MediaPlayerPositionChanged,
+//         on_position_changed,
+//         NULL
+//     );
+//     assert(res == 0);
+//     res = libvlc_event_attach(
+//         event_manager,
+//         libvlc_MediaPlayerPaused,
+//         on_position_changed,
+//         NULL
+//     );
+//     assert(res == 0);
+// }
