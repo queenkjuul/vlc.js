@@ -16,3 +16,4 @@ vlc.wasm
 vlc.worker.js
 libvlc.d.ts
 libvlc_wasm.sym
+libvlc_events.ts

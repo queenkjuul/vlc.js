@@ -80,6 +80,8 @@ emcc --bind \
     --emit-tsd libvlc.d.ts \
     -o vlc.js
 
+node lib/generate-event-dts.js
+
 #em++ --bind -s USE_PTHREADS=1 -s TOTAL_MEMORY=2GB -s PTHREAD_POOL_SIZE=21 \
 #    -s OFFSCREEN_FRAMEBUFFER=1\
 #    -s USE_WEBGL2=1 \
