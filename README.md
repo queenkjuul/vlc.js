@@ -1,5 +1,9 @@
 # VLC.js: VLC for WASM/asm.js
 
+**DISCODECK AUTHOR'S NOTE:** This is a fork of [Alaric Senat's fork](https://code.videolan.org/asenat/vlc.js) of the original [VLC.js by Jean-Baptiste Kempf of VideoLAN.](https://code.videolan.org/jbk/vlc.js) It is specifically modified for use with [`discodeck/vlc-js`](https://github.com/queenkjuul/vlc-js), an NPM package that wraps VLC.js into a TypeScript library and reusable iframe entrypoint. The actual contents of this repo have been kept as close to `asenat`'s version as possible, at least for now, so see the `vlc-js` docs for information about my changes.
+
+**Original README is preserved below**
+
 This project is a port of VLC to run completely in the web-browser.
 
 It is, of course, quite insane, but it will be doable in the future, as WASM improves.
